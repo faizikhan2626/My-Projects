@@ -1,0 +1,463 @@
+#include <iostream>
+#include <stdlib.h>
+#include <fstream>
+#include <string>
+using namespace std;
+
+#define size 20
+int counter = 0;
+
+
+class employee
+{
+private:
+	string name,position;
+	int id, age, experience,pay;
+public:
+	employee();
+	employee(string name, string position, int id, int age, int experience, int pay);
+	void print();
+
+	int get_pay();
+	void set_pay(int);
+	
+	string get_name();
+	void set_name(string);
+
+	string get_position();
+	void set_position(string);
+
+	int get_id();
+	void set_id(int);
+
+	int get_age();
+	void set_age(int);
+	
+	int get_experience();
+	void set_experience(int);
+	employee* set_values();
+
+	employee* new_data();
+	void insert(employee*);
+
+	void search_id(employee*);
+	void delete_record(employee*);
+	
+};
+
+void save_to_file(employee* e)
+{
+	ofstream file;
+	file.open("Text.txt");
+	for (int loop =0;loop<counter;loop++)
+	{
+		file << e[loop].get_name()<< " " << e[loop].get_position()<<" "<< e[loop].get_id() <<" " << e[loop].get_age() << " " << e[loop].get_experience() << " " << e[loop].get_pay() ;
+		if (loop + 1 == counter)
+		{
+		}
+		else
+			file << endl;
+	}
+}
+
+void employee::delete_record(employee* e)
+{
+	int a;
+	cout << "\n   Enter ID to Delete = ";
+	cin >> a;
+	for (int loop = 0; loop < counter; loop++)
+	{
+		if (e[loop].id == a)
+		{
+			cout << "   Record Deleted Successfully !!!\n";
+			for (int loop1 = loop; loop1 < counter-1; loop1++)
+			{
+				e[loop1].set_age(e[loop1 + 1].get_age());
+				e[loop1].set_experience(e[loop1 + 1].get_experience());
+				e[loop1].set_position(e[loop1 + 1].get_position());
+				e[loop1].set_id(e[loop1 + 1].get_id());
+				e[loop1].set_name(e[loop1 + 1].get_name());
+				e[loop1].set_pay(e[loop1 + 1].get_pay());
+			}
+			counter--;
+			return;
+		}
+	}
+	cout << "   Record Not Found!!!\n";
+}
+
+void employee::search_id(employee* e)
+{
+	int a;
+	cout << "\n   Enter ID to Search = ";
+	cin >> a;
+	for (int loop = 0; loop < counter; loop++)
+	{
+		if (e[loop].id == a)
+		{
+			cout << "\n   Record Found!!!\n";
+			e[loop].print();
+			return;
+		}
+	}
+	cout << "   Record Not Found!!!\n";
+}
+
+void employee::insert(employee* e)
+{
+		cout << "----------------------------------\n";
+		cout << "   Name                = ";
+		cin >> e[counter].name ;
+		cout << "   ID                  = ";
+		cin >> e[counter].id;
+		cout << "   Position            = ";
+		cin >> e[counter].position;
+		cout << "   Age                 = ";
+		cin >> e[counter].age;
+		cout << "   Experience in Years = ";
+		cin >> e[counter].experience;
+		cout << "   Pay                 = ";
+		cin >> e[counter].pay;
+		cout << "----------------------------------\n";
+	counter++;
+}
+
+employee* employee::new_data()
+{
+	int option2;
+	cout << "How Many Records to Enter = ";
+	cin >> option2;
+	counter = option2;
+	employee* q = new employee[option2];
+	for (int loop = 0; loop < option2; loop++)
+	{
+		cout << "----------------------------------\n";
+		cout << "   Name                = ";
+		cin >> q[loop].name;
+		cout << "   Position            = ";
+		cin >> q[loop].position;
+		cout << "   ID                  = ";
+		cin >> q[loop].id;
+		cout << "   Age                 = ";
+		cin >> q[loop].age;
+		cout << "   Experience in Years = ";
+		cin >> q[loop].experience;
+		cout << "   Pay                 = ";
+		cin >> q[loop].pay;
+		cout << "----------------------------------\n";
+	}
+	return q;
+}
+
+void menu(employee* e);
+
+employee* employee::set_values()
+{
+	string n, p;
+	int i, ag, ee;
+	int pa;
+	ifstream file;
+	file.open("Text.txt");
+	employee* e = new employee[size];
+	while(!file.eof())
+	{
+		file >> n >> p >> i >> ag >> ee >> pa;
+		e[counter].set_name(n);
+		e[counter].set_age(ag);
+		e[counter].set_experience(ee);
+		e[counter].set_id(i);
+		e[counter].set_position(p);
+		e[counter].set_pay(pa);
+		counter++;
+	}
+	return e;
+}
+
+void employee::set_pay(int pay)
+{
+	this->pay = pay;
+}
+
+int employee::get_pay()
+{
+	return pay;
+}
+
+employee::employee()
+{
+	name = "";
+	position="";	
+	pay = id = age = experience = 0;
+}
+
+employee::employee(string name, string position, int id, int age, int experience, int pay)
+{
+	this->name = name;
+	this->position = position;
+	this->id = id;
+	this->experience = experience;
+	this->age = age;
+	this->pay = pay;
+}
+
+void employee::print()
+{
+	    cout << "-------------------------------------------------------\n";
+		cout << "         Name       = " << name <<endl;
+		cout << "         Position   = " << position << endl;
+		cout << "         ID         = " <<  id<<endl; 
+		cout << "         Experience = " <<experience  << " Years" << endl;
+		cout << "         Age        = " <<  age <<endl;
+		cout << "         Pay        = Rs. " << pay <<endl;
+		cout << "-------------------------------------------------------\n";
+}
+
+string employee::get_name()
+{
+	return name;
+}
+void employee::set_name(string name)
+{
+	this->name = name;
+}
+
+string employee::get_position()
+{
+	return position;
+}
+void employee::set_position(string position)
+{
+	this->position = position;
+}
+
+int employee::get_id()
+{
+	return id;
+}
+void employee::set_id(int id)
+{
+	this->id = id;
+}
+
+int employee::get_age()
+{
+	return age;
+}
+void employee::set_age(int age)
+{
+	this->age = age;
+}
+
+int employee::get_experience()
+{
+	return experience;
+}
+void employee::set_experience(int experience)
+{
+	this->experience = experience;
+}
+
+
+int getMid(int s, int e) { return s + (e - s) / 2; }
+
+
+int getSumUtil(int* st, int ss, int se, int qs, int qe, int si)
+{
+	if (qs <= ss && qe >= se)
+		return st[si];
+
+	if (se < qs || ss > qe)
+		return 0;
+
+	int mid = getMid(ss, se);
+	return getSumUtil(st, ss, mid, qs, qe, 2 * si + 1) +
+		getSumUtil(st, mid + 1, se, qs, qe, 2 * si + 2);
+}
+
+
+void updateValueUtil(int* st, int ss, int se, int i, int diff, int si)
+{
+	if (i < ss || i > se)
+		return;
+
+	st[si] = st[si] + diff;
+	if (se != ss)
+	{
+		int mid = getMid(ss, se);
+		updateValueUtil(st, ss, mid, i, diff, 2 * si + 1);
+		updateValueUtil(st, mid + 1, se, i, diff, 2 * si + 2);
+	}
+}
+
+
+void updateValue(int arr[], int* st, int n, int i, int new_val)
+{
+	if (i < 0 || i > n - 1)
+	{
+		cout << "Invalid Input";
+		return;
+	}
+
+		int diff = new_val - arr[i];
+
+	arr[i] = new_val;
+	
+	updateValueUtil(st, 0, n - 1, i, diff, 0);
+}
+
+
+int getSum(int* st, int n, int qs, int qe)
+{
+	if (qs < 0 || qe > n - 1 || qs > qe)
+	{
+		cout << "Invalid Input\n";
+		return -1;
+	}
+
+	return getSumUtil(st, 0, n - 1, qs, qe, 0);
+}
+
+
+int constructSTUtil(int arr[], int ss, int se, int* st, int si)
+{
+	
+	if (ss == se)
+	{
+		st[si] = arr[ss];
+		return arr[ss];
+	}
+
+
+	int mid = getMid(ss, se);
+	st[si] = constructSTUtil(arr, ss, mid, st, si * 2 + 1) +
+		constructSTUtil(arr, mid + 1, se, st, si * 2 + 2);
+	return st[si];
+}
+
+
+int* constructST(int arr[], int n)
+{
+ 
+	int x = (int)(ceil(log2(n)));
+
+	int max_size = 2 * (int)pow(2, x) - 1;
+
+	int* st = new int[max_size];
+
+	constructSTUtil(arr, 0, n - 1, st, 0);
+
+	return st;
+}
+
+int* make_array(employee* p)
+{
+	int* arr = new int[size];
+	for (int loop = 0; loop < size;loop++)
+	{
+		arr[loop]=p[loop].get_pay();
+    }
+	return arr;
+}
+
+
+int main()
+{
+	employee* p = new employee[size];
+	p=p->set_values();
+	menu(p);
+	save_to_file(p);
+}
+
+
+void menu(employee *e)
+{
+	int option;
+	do
+	{
+		
+	cout << "--------------------------------------------\n";
+	cout << "             Employee\n"
+		 << "         Management System\n\n";
+	cout << "    Print Data              (1)\n";
+	cout << "    Enter All Data          (2)\n";
+	cout << "    Insert New Record       (3)\n";
+	cout << "    Search a Record         (4)\n";
+	cout << "    Delete a Record         (5)\n";
+	cout << "    Sum Queries             (6)\n";
+	cout << "    Update Query            (7)\n";
+	cout << "    Clear Screen            (8)\n";
+	cout << "    Exit                    (9)\n";
+	cout << "--------------------------------------------\n";
+
+    cout << "    Option = ";
+	cin >> option;
+	int* arr = make_array(e);
+	int* st = constructST(arr, size);
+	int a, b;
+	if (option == 1)
+	{
+		for (int loop = 0; loop < counter; loop++)
+		{
+			cout << "\nEmployee " << loop + 1 << " : \n";
+			e[loop].print();
+		}
+	}
+	else if (option == 2)
+	{
+		e = e->new_data();
+	}
+	else if (option == 3)
+	{
+		e->insert(e);
+	}
+	else if (option == 4)
+	{
+		e->search_id(e);
+	}
+	else if (option == 5)
+	{
+		e->delete_record(e);
+	}
+	else if (option == 6)
+	{
+		cout << "    Start of Query = ";
+		cin >> a;
+		cout << "    End of Query = ";
+		cin >> b;
+		while (a >= counter || b >= counter || a > b)
+		{
+			cout << "\n";
+			cout << "    Error !!!\n";
+			cout << "    Enter Again!\n";
+			cout << "    Start of Query = ";
+			cin >> a;
+			cout << "    End of Query = ";
+			cin >> b;
+			cout << "\n";
+		}
+		cout << "    Sum of Pay in given range = Rs. " << getSum(st, size, a, b) << endl;
+	}
+	else if (option == 7)
+	{
+		int c,d;
+		cout << "   Enter ID's Pay to Update = ";
+		cin >> c;
+		cout << "   Enter Amount to Update ID to = ";
+		cin >> d;
+		for (int loop = 0; loop < counter; loop++)
+		{
+			if (e[loop].get_id() == c)
+			{
+				cout << "   Record Updated Successfully !!!\n";
+				updateValue(arr, st, counter, loop, d);
+				e[loop].set_pay(d);
+				break;
+			}
+		}
+		
+	}
+	else if (option ==8)
+	system("CLS");
+	} while (option != 9 );
+
+}
