@@ -1,0 +1,822 @@
+#include <iostream>
+#include <string>
+#include <conio.h>
+using namespace std;
+void wellcome(); //Global Fucntions
+int option();
+void medi_opt();
+class name //Parent class (inheritance)
+{
+protected:
+string first_name;
+string sec_name;
+string fathers_name;
+string email;
+string id;
+string password;
+public:
+name() {}
+name(string, string, string, string, string, string);
+string getfirst_name();
+string getsec_name();
+string getemail();
+string getid();
+string getpassword();
+void setfirst_name(string);
+void setsec_name(string);
+void setemail(string);
+void setid(string);
+void setpassword(string);
+void setfathers_name(string);
+void print();
+};
+name::name(string first_name, string sec_name, string fathers_name, string email, string id, string
+password)
+{
+this->email = email;
+this->first_name = first_name;
+this->sec_name = sec_name;
+this->fathers_name = fathers_name;
+this->id = id;
+this->password = password;
+}
+string name::getfirst_name()
+
+{
+return first_name;
+}
+string name::getsec_name()
+{
+return sec_name;
+}
+string name::getemail()
+{
+return email;
+}
+string name::getid()
+{
+return id;
+}
+string name::getpassword()
+{
+return password;
+}
+void name::setfirst_name(string s)
+{
+this->first_name = first_name;
+}
+void name::setfathers_name(string fathers_name)
+{
+this->fathers_name = fathers_name;
+}
+void name::setsec_name(string sec_name)
+{
+this->sec_name = sec_name;
+}
+void name::setemail(string email)
+{
+this->email = email;
+}
+void name::setid(string id)
+{
+this->id = id;
+}
+void name::setpassword(string password)
+{
+this->password = password;
+}
+void name::print() //print Function
+{
+
+cout << "----------------------------------------------------------\n";
+cout << "Name = " << first_name << " " << sec_name << endl;
+cout << "Fathers Name = " << fathers_name << endl;
+cout << "Email = " << email << endl;
+cout << "ID = " << id << endl;
+cout << "Password = " << password << endl;
+}
+class doctor :public name //child class
+{
+int entryTime;
+int exitTime;
+int numberOfAppoint;
+string specialty;
+public:
+doctor() {}
+doctor(int entryTime, int exitTime, int numberOfAppoint, string specialty, string first_name,
+string sec_name, string fathers_name, string email, string id, string password)
+{
+this->entryTime = entryTime;
+this->exitTime = exitTime;
+this->email = email;
+this->fathers_name = fathers_name;
+this->specialty = specialty;
+this->numberOfAppoint = numberOfAppoint;
+this->first_name = first_name;
+this->sec_name = sec_name;
+this->id = id;
+this->password = password;
+}
+int getentryTime();
+int getexitTime();
+int getnumberOfAppoint();
+string getspecialty();
+void setentryTime(int);
+void setexitTime(int);
+void setnumberOfAppoint(int);
+void setspecialty(string);
+void print();
+void sign();
+};
+int doctor::getentryTime()
+{
+return entryTime;
+}
+int doctor::getexitTime()
+
+{
+return exitTime;
+}
+int doctor::getnumberOfAppoint()
+{
+return numberOfAppoint;
+}
+string doctor::getspecialty()
+{
+return specialty;
+}
+void doctor::setentryTime(int entryTime)
+{
+this->entryTime = entryTime;
+}
+void doctor::setexitTime(int exitTime)
+{
+this->exitTime = exitTime;
+}
+void doctor::setnumberOfAppoint(int numberOfAppoint)
+{
+this->numberOfAppoint = numberOfAppoint;
+}
+void doctor::setspecialty(string specialty)
+{
+this->specialty = specialty;
+}
+void doctor::print()
+{
+cout << "------------------------------------------------------------\n";
+cout << " Name = " << first_name << " " << sec_name << endl;
+cout << " Fathers Name = " << fathers_name << endl;
+cout << " Entry Time = " << entryTime << " : 00" << "\n";
+cout << " Exit Time = " << exitTime << " : 00" << "\n";
+cout << " Number of Appointments = " << numberOfAppoint << endl;
+cout << " Specialty = " << specialty << endl;
+cout << " Email = " << email << endl;
+cout << " ID = " << id << endl;
+cout << " Password = " << password << endl;
+cout << "------------------------------------------------------------\n";
+}
+void doctor::sign() //sign in or sign up function for doctors
+{
+string pass;
+string em;
+
+int sign;
+cout << "For sign in = 1 \n";
+cout << "For sign up = 2 \nOption = ";
+cin >> sign;
+if (sign == 1) //accepts only when both email and password are correct
+{
+do
+{
+cout << "Enter Email:";
+cin >> em;
+if (em == email)
+{
+do {
+cout << "Enter Password:";
+cin >> pass;
+if (pass == password)
+{
+cout << "Access Granted...\n\n";
+setnumberOfAppoint(rand() % 100);
+print();
+}
+} while (pass != password);
+}
+}while (em != email);
+}
+else if (sign == 2) //sign up
+{
+string spec, fname, secname, emal, Id, pass, fathers;
+cout << "Enter First Name = ";
+cin >> fname;
+setfirst_name(fname);
+cout << "Enter Second Name = ";
+cin >> secname;
+setsec_name(secname);
+string garbage;
+getline(cin, garbage);
+cout << "Enter Father's Name = ";
+getline(cin, fathers);
+setfathers_name(fathers);
+cout << "Enter Specialty = ";
+cin >> spec;
+setspecialty(spec);
+cout << "Enter Email = ";
+cin >> emal;
+
+setemail(emal);
+cout << "Enter ID = ";
+cin >> Id;
+setid(Id);
+cout << "Enter Password = ";
+cin >> pass;
+setpassword(pass);
+cout << " Sign Up was Successful!!\n\n";
+print();
+}
+}
+class facilities //Facility Class
+{
+private:
+int doctors;
+int Nurses;
+int management;
+int rooms;
+int cafes;
+int emergency_rooms;
+public:
+facilities() {}
+facilities(int doctors, int Nurses, int management, int rooms, int cafes, int emergency_rooms)
+{
+this->doctors = doctors;
+this->Nurses = Nurses;
+this->management = management;
+this->rooms = rooms;
+this->cafes = cafes;
+this->emergency_rooms = emergency_rooms;
+}
+void print()
+{
+cout << "------------------------------------------------------------\n";
+cout << " Total Number of Doctors = " << doctors << endl;
+cout << " Total Number of Nurses = " << Nurses << endl;
+cout << " Total Number of Managements = " << management << endl;
+cout << " Total Number of Rooms = " << rooms << endl;
+cout << " Total Number of Cafes = " << cafes << endl;
+cout << " Total Number of Emergency Rooms = " << emergency_rooms << endl;
+cout << "-------------------------------------------------------------\n";
+}
+};
+class patient :public name //child class (inheritance)
+{
+
+int serial_num;
+int total_bill;
+public:
+patient() {}
+patient(int serial_num, int total_bill, string first_name, string sec_name, string fathers_name,
+string email, string id, string password) :name(first_name, sec_name, fathers_name, email, id,
+password)
+{
+this->serial_num = serial_num;
+this->total_bill = total_bill;
+}
+int getserial_num();
+int gettotal_bill();
+void print();
+void sign();
+void settotal_bill(int);
+void setserial_num(int);
+};
+void patient::settotal_bill(int total_bill)
+{
+this->total_bill = total_bill;
+}
+void patient::setserial_num(int serial_num)
+{
+this->serial_num = serial_num;
+}
+int patient::getserial_num()
+{
+return serial_num;
+}
+int patient::gettotal_bill()
+{
+return total_bill;
+}
+void patient::sign() //sign in and sign up function
+{
+string pass;
+string em;
+int serial;
+int sign;
+cout << "For sign in = 1 \n";
+cout << "For sign up = 2 \nOption = ";
+cin >> sign;
+if (sign == 1) //only accepts when email ,password and serial numb are correct
+{
+
+do
+{
+cout << "Enter Email:";
+cin >> em;
+if (em == email)
+{
+do
+{
+cout << "Enter password:";
+cin >> pass;
+if (pass == password)
+{
+cout << "Access Granted...\n\n";
+do
+{
+cout << "Enter Serial Number = ";
+cin >> serial;
+if (serial == serial_num)
+print();
+} while (serial != serial_num);
+}
+} while (pass != password);
+}
+} while (em != email);
+}
+else if (sign == 2) //sign up
+{
+string spec, fname, secname, emal, Id, pass, fathers;
+int serial;
+string garbage;
+cout << "Enter First Name = ";
+cin >> fname;
+setfirst_name(fname);
+cout << "Enter Second Name = ";
+cin >> secname;
+setsec_name(secname);
+getline(cin, garbage);
+cout << "Enter Father's Name = ";
+getline(cin, fathers);
+setfathers_name(fathers);
+cout << "Enter Serial Number = ";
+cin >> serial;
+setserial_num(serial);
+cout << "Enter Email = ";
+cin >> emal;
+
+setemail(emal);
+cout << "Enter ID = ";
+cin >> Id;
+setid(Id);
+cout << "Enter Password = ";
+cin >> pass;
+setpassword(pass);
+settotal_bill(0);
+cout << " Sign Up was Successful!!\n\n";
+print();
+}
+}
+void patient::print()
+{
+name::print();
+cout << "Serial Number = " << serial_num << endl;
+cout << "Total Bill = " << total_bill << endl;
+cout << "-------------------------------------------------\n";
+}
+class appointments //class for taking appointments (composition)
+{
+string username, password;
+doctor doc;
+public:
+appointments() {}
+appointments(string, string, doctor);
+string getusername();
+string getpassword();
+void setusername(string);
+void setpassword(string);
+void sign();
+void setappoint();
+void appointment();
+};
+appointments::appointments(string username, string password, doctor doc)
+{
+this->password = password;
+this->username = username;
+this->doc = doc;
+}
+string appointments::getusername()
+{
+return username;
+}
+string appointments::getpassword()
+
+{
+return password;
+}
+void appointments::setusername(string username)
+{
+this->username = username;
+}
+void appointments::setpassword(string password)
+{
+this->password = password;
+}
+void appointments::setappoint()
+{
+doc.setnumberOfAppoint(doc.getnumberOfAppoint() + 1);
+}
+void appointments::sign() //sign in for admin
+{
+string pass;
+string usernames;
+do
+{
+cout << " Enter Username:";
+cin >> usernames;
+if (usernames == username)
+{
+do
+{
+cout << " Enter password:";
+cin >> pass;
+if (pass == password)
+{
+cout << " Access Granted...\n\n";
+appointment(); //if username,pass are correct ,calls
+appointment func.
+}
+} while (pass != password);
+}
+} while ((usernames != username));
+}
+void appointments::appointment()
+{
+string nam;
+cout << "Which Doctor Appointment You want?\n";
+cout << "Enter Doctors Second Name = ";
+cin >> nam;
+
+if (nam == doc.getsec_name()) //if doctor name is not found ,it takes you to help func.
+{
+int hours = doc.getentryTime() + rand() % 12, mins = mins = 0 + rand() % 60;
+while (hours > 24)
+{
+hours = doc.getentryTime() + rand() % 12;
+}
+cout << "---------------------------------------------------------------------\n";
+cout << "\t\t\tAppointment was Successful !!!!!!!!\n\n";
+setappoint();
+cout << " Doctors Name = " << doc.getfirst_name() << " " << doc.getsec_name() << "
+\n";
+cout << " Doctors ID = " << doc.getid() << "\n";
+cout << " Appointment Timing = " << hours << " : " << mins << " \n";
+cout << " Specialty = " << doc.getspecialty() << endl;
+cout << "---------------------------------------------------------------------\n";
+}
+else
+{
+cout << " \t\t\tSorry, Doctor was not Found!\n";
+cout << " \t\t\tBut we can provide some help\n";
+int a;
+cout << " \t\t\tIf you want to avail such help\n";
+cout << " Enter 1 For Help \n Enter 2 for Exit\n";
+cout << " Option = ";
+cin >> a;
+if (a == 1)
+{
+medi_opt(); //calls another function for help incase of no doctor
+}
+else
+exit(0);
+}
+}
+class medicine //medicine class
+{
+string name;
+string id;
+int expiry;
+string classification;
+public:
+medicine() {}
+medicine(string name, string id, int expiry, string classification);
+void print();
+};
+
+medicine::medicine(string name, string id, int expiry, string classification)
+{
+this->name = name;
+this->id = id;
+this->expiry = expiry;
+this->classification = classification;
+}
+void medicine::print()
+{
+cout << " For Such Problem You should Use this medicine or medicine of Such type!\n\n";
+cout << " Name of Medicine = " << name << endl;
+cout << " ID of Medicine = " << id << endl;
+cout << " Expiry = " << expiry << endl;
+cout << " Classification = " << classification << endl;
+}
+class pharmacy //pharmacy class(shop)
+{
+string name[10];
+int price[10];
+int quantity;
+int total = 0;
+public:
+pharmacy() {}
+pharmacy(string name[10], int price[10], int quantity, int);
+string getname(int loop);
+int getprice(int loop);
+int gettotal();
+void pharmac();
+void settotal(int loop);
+void print(int);
+};
+int pharmacy::gettotal()
+{
+return total;
+}
+pharmacy::pharmacy(string name[10], int price[10], int quantity, int total)
+{
+this->name[10] = name[10];
+this->price[10] = price[10];
+this->quantity = quantity;
+this->total = total;
+}
+void pharmacy::print(int loop)
+{
+cout << "------------------------------------------------------\n";
+
+cout << " Name = " << name[loop] << endl;
+cout << " Price = Rs " << price[loop] << endl;
+cout << " Quantity = " << quantity << endl;
+cout << " Final Price = Rs " << price[loop] * quantity << endl;
+cout << "------------------------------------------------------\n";
+}
+void pharmacy::settotal(int loop)
+{
+this->total += price[loop] * quantity;
+}
+string pharmacy::getname(int loop)
+{
+return name[loop];
+}
+int pharmacy::getprice(int loop)
+{
+return price[loop];
+}
+void pharmacy::pharmac() //shop that sells medicine
+{
+name[0] = "Calpol 6 Plus 250mg suspension";
+price[0] = 74;
+name[1] = "Amoxil 500 mg capsule";
+price[1] = 213;
+name[2] = "Panadol 500 mg";
+price[2] = 15;
+name[3] = "Stemetil 5mg tablet";
+price[3] = 50;
+name[4] = "Brufen DS 200mg 90ml 200mg ds suspension";
+price[4] = 75;
+name[5] = "Tioget 18 mcg capsule ";
+price[5] = 522;
+name[6] = "Dijex MP Syp suspension";
+price[6] = 51;
+name[7] = "Paracetamol 300mg tablet";
+price[7] = 120;
+name[8] = "Dan-D 200,000 IU capsule";
+price[8] = 215;
+name[9] = "Strepsils Lozenges";
+price[9] = 108;
+cout << "\t\t\t------------------------------------------------------------------\n";
+cout << "\t\t\t\t\t\tWellcome To Our Pharmacy!\n";
+cout << " \t\t\t\t\tSo Which Medicines You want to Buy!\n";
+cout << " \t\t\t\t\tCalpol 6 Plus 250mg suspension = 1\n";
+cout << " \t\t\t\t\tAmoxil 500 mg capsule = 2\n";
+
+cout << " \t\t\t\t\tPanadol 500 mg = 3\n";
+cout << " \t\t\t\t\tStemetil 5mg tablet = 4\n";
+cout << " \t\t\t\t\tBrufen DS 200mg 90ml 200mg ds suspension = 5\n";
+cout << " \t\t\t\t\tTioget 18 mcg capsule = 6\n";
+cout << " \t\t\t\t\tDijex MP Syp suspension = 7\n";
+cout << " \t\t\t\t\tParacetamol 300mg tablet = 8\n";
+cout << " \t\t\t\t\tDan-D 200,000 IU capsule = 9\n";
+cout << " \t\t\t\t\tStrepsils Lozenges = 10\n";
+cout << " \t\t\t\t\tExit = 0\n";
+cout << "\t\t\t------------------------------------------------------------------\n";
+int opt;
+do
+{
+cout << " Enter Option = ";
+cin >> opt;
+if (opt == 1)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(0);
+print(0);
+}
+if (opt == 2)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(1);
+print(1);
+}
+if (opt == 3)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(2);
+print(2);
+}
+if (opt == 4)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(3);
+print(3);
+}
+if (opt == 5)
+{
+
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(4);
+print(4);
+}
+if (opt == 6)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(5);
+print(5);
+}
+if (opt == 7)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(6);
+print(6);
+}
+if (opt == 8)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(7);
+print(7);
+}
+if (opt == 9)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(8);
+print(8);
+}
+if (opt == 10)
+{
+cout << " Enter Quantity = ";
+cin >> quantity;
+settotal(9);
+print(9);
+}
+} while (opt != 0);
+cout << " Total = Rs " << gettotal() << endl;
+}
+int main()
+{
+
+wellcome();
+pharmacy ph;
+doctor d(12, 24, 21, "MBBS", "Muhammad", "Faizan", "Risal Khan", "hamza@gmail.com",
+"123ABC", "faizan");
+facilities f(123, 230, 400, 25, 5, 6);
+patient p(123123, 20000, "Hamza", "Bilal", "Arshad", "faizan@gmail.com", "22212CD", "Ali");
+appointments a("faizi", "123456", d);
+medicine m;
+int opt = option();
+if (opt == 1)
+d.sign();
+else if (opt == 2)
+p.sign();
+else if (opt == 3)
+a.sign();
+else if (opt == 4)
+f.print();
+else if (opt == 5)
+medi_opt();
+else if (opt == 6)
+ph.pharmac();
+}
+void wellcome() //welcome global function
+{
+cout << "\t\t\t\t--------------------------------------------------------------\n";
+cout << "\t\t\t\t\t\tWellcome To National Hospital!\n";
+cout << "\t\t\t\t\t\tWellcome to our Menu\n";
+cout << "\t\t\t\t\t\tSo what are you looking for?\n";
+cout << "\t\t\t\t--------------------------------------------------------------\n";
+cout << " Doctors = 1\n";
+cout << " Patient = 2\n";
+cout << " Appointment = 3\n";
+cout << " About Facilities = 4\n";
+cout << " Quick Medical Guide = 5\n";
+cout << " Pharmacy = 6\n";
+cout << "----------------------------------------------------------------------\n";
+cout << " Option = ";
+}
+void medi_opt() //medication suggestion function
+{
+cout << "\t\t\t--------------------------------------------------------\n";
+cout << " \t\t\t\t\tSo What kind of Problem are you Facing!\n";
+cout << " \t\t\t\t\tDigestive Issue = 1\n";
+cout << " \t\t\t\t\tCentral Nervous System = 2\n";
+cout << " \t\t\t\t\tPain = 3\n";
+
+cout << " \t\t\t\t\tRespiratory System = 4\n";
+cout << " \t\t\t\t\tUrinary system = 5\n";
+cout << " \t\t\t\t\tObstetrics and Gynecology = 6\n";
+cout << " \t\t\t\t\tInfections = 7\n";
+cout << " \t\t\t\t\tImmune System = 8\n";
+cout << " \t\t\t\t\tAllergic Disorders = 9\n";
+cout << " \t\t\t\t\tNutrition = 10\n";
+cout << "\t\t\t--------------------------------------------------------\n";
+int opt;
+cout << " Option = ";
+cin >> opt;
+if (opt == 1)
+{
+medicine m("Phillips' Milk of Magnesia ", "22032", 2025, "Antacids");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 2)
+{
+medicine m("Diprivan (Pro)", "34AB3", 2022, "Anesthetics");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 3)
+{
+medicine m("Paracetamol", "922XA", 2030, "Analgesic");
+m.print();
+}
+if (opt == 4)
+{
+medicine m("Ventolin HFA", "34ZAF", 2029, "Bronchodilator");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 5)
+{
+medicine m("Nystatin (Nystan)", "56CS2", 2023, "Antifungal");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 6)
+
+{
+medicine m("Ibuprofen", "72AVD", 2029, "NSAIDs");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 7)
+{
+medicine m("Amoxicillin", "87B32", 2022, "Antibiotics");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 8)
+{
+medicine m("Gammaked (Pro)", "726T1", 2025, "Immunoglobulins");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 9)
+{
+medicine m("Cetirizine (Zyrtec, Zyrtec Allergy)", "1232BS", 2024, "Anti-allergics");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+if (opt == 10)
+{
+medicine m("TPN Electrolytes", "22032", 2025, "Parenteral nutritions");
+cout << "---------------------------------------------------------------------\n";
+m.print();
+cout << "---------------------------------------------------------------------\n";
+}
+}
+int option()
+{
+int opt;
+do {
+cin >> opt;
+} while (!(opt == 1 || opt == 2 || opt == 3 || opt == 4 || opt == 5 || opt == 6));
+return opt;
+}
