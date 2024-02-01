@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h> 
+#include <string.h> 
+#include <unistd.h> 
+#define MAX_TRIES 6
+#define MAX_WORD_LENGTH 10 
+char secretWord[MAX_WORD_LENGTH]; 
+char guessedWord[MAX_WORD_LENGTH]; 
+int incorrectGuesses = 0; 
+sem_t semaphore; 
+void* playerFunction(void* playerID);
+int main()  {  
+        sem_init(&semaphore, 0, 1);    
+        printf("Welcome to Hangman!\n");  
+        printf("Player 1, Enter the secret word: "); 
+        scanf("%s", secretWord);      system("clear"); 
+        int wordLength = strlen(secretWord); 
+        for (int i = 0; i < wordLength; i++) {    
+                guessedWord[i] = '_';    
+        }    
+        guessedWord[wordLength] = '\0';   
+        printf("\nPress Enter to start the game...");  
+        getchar();   
+        getchar();    
+        pthread_t player2;   
+        int playerID2 = 2;    
+        pthread_create(&player2, NULL, playerFunction, (void*)&playerID2);   
+        pthread_join(player2, NULL);   
+        sem_destroy(&semaphore);  
+        return 0;
+}  
+void displayHangman() 
+{    
+        switch (incorrectGuesses) 
+        {     case 1:     
+                printf("   O\n");     
+                break;     
+         case 2:        
+                 printf("   O\n");     
+                 printf("   |\n");   
+                 break;    
+         case 3:        
+                 printf("   O\n");    
+                 printf("  /|\\\n");    
+                 break;    
+         case 4:        
+                 printf("   O\n");  
+                 printf("  /|\\\n");     
+                 printf("  /\n");      
+                 break;    
+         case 5:      
+                 printf("   O\n");    
+                 printf("  /|\\\n");  
+                 printf("  / \\\n");   
+                 break;  
+         case 6:    
+                 printf("   O\n");      
+                 printf("  /|\\\n");    
+                 printf("  / \\\n");      
+                 printf("  | |\n");       
+                 break;    
+         default:      
+                 break;   
+        }
+}   
+void* playerFunction(void* playerID) 
+{   
+        int id = *((int*)playerID);   
+        while (incorrectGuesses < MAX_TRIES) {     
+                sem_wait(&semaphore);    
+                displayHangman();     
+                printf("Current word: %s\n", guessedWord);      
+                if (strcmp(guessedWord, secretWord) == 0) {     
+                        printf("Player %d wins! You guessed the word: %s\n", id, secretWord); 
+                        sem_post(&semaphore);          
+                        break;     
+                }         
+                char guess;       
+                printf("Player %d, enter your guess: ", id);     
+                scanf(" %c", &guess);     
+                int found = 0;       
+                for (int i = 0; i < strlen(secretWord); i++) {   
+                        if (secretWord[i] == guess) {      
+                                found = 1;             
+                                guessedWord[i] = guess;     
+                        }       
+                }         
+                if (!found) {       
+                        incorrectGuesses++;        
+                        printf("Incorrect guess! Tries left: %d\n", MAX_TRIES - incorrectGuesses);    
+                }        
+                if (incorrectGuesses == MAX_TRIES) {        
+                        printf("Player %d loses! The correct word was: %s\n", id, secretWord);  
+                }       
+                if (incorrectGuesses == MAX_TRIES && strcmp(guessedWord, secretWord) != 0) {    
+                        printf("Player 1 wins! Hangman complete.\n");      
+                }       
+                sem_post(&semaphore);         
+                sleep(1);   
+        }      
+        pthread_exit(NULL); 
+} 
